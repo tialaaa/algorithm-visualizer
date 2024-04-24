@@ -1,5 +1,26 @@
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
 .cell {
-  background-color: black;
   width: 40px;
   height: 40px;
+  border: 0.5px solid lightgrey;
+}
+
+.cell.wall {
+  background-color: black;
+}
+
+.cell.path {
+  background-color: white;
+}
+
+.cell.start {
+  background-color: green;
+}
+
+.cell.end {
+  background-color: red;
 }

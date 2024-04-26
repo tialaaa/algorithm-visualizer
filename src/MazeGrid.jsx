@@ -10,10 +10,11 @@ export default function MazeGrid() {
     ['wall', 'wall', 'wall', 'wall'],
   ];
 
-  function bfs(startNode) {
+  function bfsAlgorithm(startNode) {
     let queue = [startNode];
     // Nodes are named by [x, y] grid coordinates
-    let visited = new Set(`${start[0]}, ${start[1]}`);
+    // let visited = new Set(`${start[0]}, ${start[1]}`);
+    let visited = new Set(startNode);
 
     function visitCell([x, y]) {
       console.log(x, y);
@@ -65,7 +66,7 @@ export default function MazeGrid() {
     return false;
   };
 
-  function dfs(startNode) {
+  function dfsAlgorithm(startNode) {
     let stack = [startNode];
     let visited = new Set(`${start[0]}, ${start[1]}`);
 
@@ -175,12 +176,20 @@ export default function MazeGrid() {
 
   return (
     <div className='maze-container'>
-      <button className='refresh-button' onClick={() => generateMaze(10, 10)}>
-        Refresh Maze
-      </button>
+      <div className='button-container'>
+        <button className='button' onClick={() => generateMaze(10, 10)}>
+          Refresh Maze
+        </button>
+        <button className='button' onClick={() => bfsAlgorithm([1, 0])}>
+          Breadth-First Search
+        </button>
+        <button className='button' onClick={() => dfsAlgorithm([1, 0])}>
+          Depth-First Search
+        </button>
+      </div>
       <div className='maze'>
         {maze.map((row, rowIndex) => (
-          <div className='row' key={rowIndex}>
+          <div className='maze-row' key={rowIndex}>
             {row.map((cell, cellIndex) => (
               <div className={`cell ${cell}`} key={cellIndex}></div>
             ))}

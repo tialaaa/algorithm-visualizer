@@ -10,6 +10,59 @@ export default function MazeGrid() {
     ['wall', 'wall', 'wall', 'wall'],
   ];
 
+  function bfs(startNode) {
+    let queue = [startNode];
+    // Nodes are named by [x, y] grid coordinates
+    let visited = new Set(`${start[0]}, ${start[1]}`);
+
+    function visitCell([x, y]) {
+      if (maze[y][x] === 'end') {
+        console.log('path found!');
+        return true;
+      };
+
+      return false;
+    };
+
+    function step() {
+      if (queue.length === 0) {
+        return;
+      }
+
+      // Select the next node in the queue
+      const [x, y] = queue.shift();
+      console.log('new step')
+
+      const dirs = [
+        [0, 1],
+        [1, 0],
+        [0, -1],
+        [-1, 0]
+      ];
+
+      // Loop through that node's neighbors
+      for (const [dx, dy] of dirs) {
+        nx = x + dx;
+        ny = y + dy;
+
+        // If cell is valid and unvisited, mark as visited & push to queue
+        if (nx >= 0 && nx < width && ny >= 0 && ny < height && !visited.has(`${nx}, ${ny}`)) {
+          visited.add(`${nx}, ${ny}`);
+
+          if (maze[ny][nx] === 'path' || maze[ny][nx] === 'end') {
+            if (visitCell(start)) {
+              return true;
+            };
+            queue.push([nx][ny]);
+          };
+        };
+      };
+    };
+
+    step();
+    return false;
+  };
+
   const [maze, setMaze] = useState(initialMaze);
 
   function generateMaze(height, width) {
@@ -28,6 +81,7 @@ export default function MazeGrid() {
 
     console.log(matrix)
 
+    // The 4 possible directions to move from a given cell
     const dirs = [
       [0, 1],
       [1, 0],
@@ -39,6 +93,7 @@ export default function MazeGrid() {
       return y >= 0 && x >= 0 && x < width && y < height && matrix[y][x] === 'wall';
     };
 
+    // Recursively carve from a given point by randomly selecting a starting direction & verifying each neighbor cell as a valid path space
     function carvePath(x, y) {
       matrix[y][x] = 'path';
 

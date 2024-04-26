@@ -59,7 +59,6 @@ export default function MazeGrid() {
 
     matrix[1][0] = 'start';
     matrix[height - 2][width - 1] = 'end';
-
     setMaze(matrix);
   };
 
@@ -70,9 +69,9 @@ export default function MazeGrid() {
       </button>
       <div className='maze'>
         {maze.map((row, rowIndex) => (
-          <div className='row'>
+          <div className='row' key={rowIndex}>
             {row.map((cell, cellIndex) => (
-              <div className={`cell ${cell}`}></div>
+              <div className={`cell ${cell}`} key={cellIndex}></div>
             ))}
           </div>
         ))}

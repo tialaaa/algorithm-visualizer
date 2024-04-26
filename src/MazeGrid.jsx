@@ -16,6 +16,8 @@ export default function MazeGrid() {
     let visited = new Set(`${start[0]}, ${start[1]}`);
 
     function visitCell([x, y]) {
+      console.log(x, y);
+
       if (maze[y][x] === 'end') {
         console.log('path found!');
         return true;
@@ -31,7 +33,7 @@ export default function MazeGrid() {
 
       // Select the next node in the queue
       const [x, y] = queue.shift();
-      console.log('new step')
+      console.log('new step');
 
       const dirs = [
         [0, 1],
@@ -54,6 +56,60 @@ export default function MazeGrid() {
               return true;
             };
             queue.push([nx][ny]);
+          };
+        };
+      };
+    };
+
+    step();
+    return false;
+  };
+
+  function dfs(startNode) {
+    let stack = [startNode];
+    let visited = new Set(`${start[0]}, ${start[1]}`);
+
+    function visitCell([x, y]) {
+      console.log(x, y);
+
+      if (maze[y][x] === 'end') {
+        console.log('path found!');
+        return true;
+      };
+
+      return false;
+    };
+
+    function step() {
+      if (stack.length === 0) {
+        return;
+      }
+
+      // Select the last node in the stack
+      const [x, y] = stack.pop();
+      console.log('new step');
+
+      const dirs = [
+        [0, 1],
+        [1, 0],
+        [0, -1],
+        [-1, 0]
+      ];
+
+      // Loop through that node's neighbors
+      for (const [dx, dy] of dirs) {
+        nx = x + dx;
+        ny = y + dy;
+
+        // If cell is valid and unvisited, mark as visited & push to stack
+        if (nx >= 0 && nx < width && ny >= 0 && ny < height && !visited.has(`${nx}, ${ny}`)) {
+          visited.add(`${nx}, ${ny}`);
+
+          if (maze[ny][nx] === 'path' || maze[ny][nx] === 'end') {
+            if (visitCell(start)) {
+              return true;
+            };
+            stack.push([nx][ny]);
           };
         };
       };

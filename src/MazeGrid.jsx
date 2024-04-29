@@ -5,34 +5,42 @@ export default function MazeGrid({ width = 15, height = 15 }) {
   const [maze, setMaze] = useState([]);
   const [timeoutIds, setTimeoutIds] = useState([]);
 
+  // The 4 possible directions to move from a given cell
+  const dirs = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0]
+  ];
+  
   useEffect(() => {
     generateMaze(width, height)
   }, []);
+
+  function visitCell([x, y]) {
+    // Visually change each visited cell by reassigning its value
+    setMaze((previousMaze) =>
+      previousMaze.map((row, rowIndex) =>
+        row.map((cell, cellIndex) => {
+          if (rowIndex === y && cellIndex === x) {
+            return cell === 'end' ? 'end' : 'visited'
+          };
+          return cell;
+        })
+      )
+    );
+
+    if (maze[y][x] === 'end') {
+      return true;
+    };
+
+    return false;
+  };
 
   function bfsAlgorithm(startNode) {
     let queue = [startNode];
     // Nodes are named by [x, y] grid coordinates
     let visited = new Set(`${startNode[0]}, ${startNode[1]}`);
-
-    function visitCell([x, y]) {
-      // Visually change each visited cell by reassigning its value
-      setMaze((previousMaze) =>
-        previousMaze.map((row, rowIndex) =>
-          row.map((cell, cellIndex) => {
-            if (rowIndex === y && cellIndex === x) {
-              return cell === 'end' ? 'end' : 'visited'
-            };
-            return cell;
-          })
-        )
-      );
-
-      if (maze[y][x] === 'end') {
-        return true;
-      };
-
-      return false;
-    };
 
     function step() {
       if (queue.length === 0) {
@@ -41,13 +49,6 @@ export default function MazeGrid({ width = 15, height = 15 }) {
 
       // Select the next node in the queue
       const [x, y] = queue.shift();
-
-      const dirs = [
-        [0, 1],
-        [1, 0],
-        [0, -1],
-        [-1, 0]
-      ];
 
       // Loop through that node's neighbors
       for (const [dx, dy] of dirs) {
@@ -67,9 +68,9 @@ export default function MazeGrid({ width = 15, height = 15 }) {
         };
       };
       
-      // Delay each step by 100 ms for visualization purposes
-      const timeoutId = setTimeout(step, 100);
-      setTimeoutIds((previousTimeoutIds) => [...previousTimeoutIds, timeoutId]);
+      // Delay each step by 100 ms for visualization purposes, and track them in state
+      const timeoutForEachStep = setTimeout(step, 100);
+      setTimeoutIds((previousTimeoutIds) => [...previousTimeoutIds, timeoutForEachStep]);
     };
 
     step();
@@ -80,26 +81,6 @@ export default function MazeGrid({ width = 15, height = 15 }) {
     let stack = [startNode];
     let visited = new Set(`${startNode[0]}, ${startNode[1]}`);
 
-    function visitCell([x, y]) {
-      // Visually change each visited cell by reassigning its value
-      setMaze((previousMaze) =>
-        previousMaze.map((row, rowIndex) =>
-          row.map((cell, cellIndex) => {
-            if (rowIndex === y && cellIndex === x) {
-              return cell === 'end' ? 'end' : 'visited'
-            };
-            return cell;
-          })
-        )
-      );
-      
-      if (maze[y][x] === 'end') {
-        return true;
-      };
-
-      return false;
-    };
-
     function step() {
       if (stack.length === 0) {
         return;
@@ -107,13 +88,6 @@ export default function MazeGrid({ width = 15, height = 15 }) {
 
       // Select the last node in the stack
       const [x, y] = stack.pop();
-
-      const dirs = [
-        [0, 1],
-        [1, 0],
-        [0, -1],
-        [-1, 0]
-      ];
 
       // Loop through that node's neighbors
       for (const [dx, dy] of dirs) {
@@ -133,9 +107,9 @@ export default function MazeGrid({ width = 15, height = 15 }) {
         };
       };
 
-      // Delay each step by 100 ms for visualization purposes
-      const timeoutId = setTimeout(step, 100);
-      setTimeoutIds((previousTimeoutIds) => [...previousTimeoutIds, timeoutId]);
+      // Delay each step by 100 ms for visualization purposes, and track them in state
+      const timeoutForEachStep = setTimeout(step, 100);
+      setTimeoutIds((previousTimeoutIds) => [...previousTimeoutIds, timeoutForEachStep]);
     };
 
     step();
@@ -149,20 +123,11 @@ export default function MazeGrid({ width = 15, height = 15 }) {
       let row = [];
 
       for (let j = 0; j < width; j++) {
-        let cell = Math.random();
         row.push('wall')
       };
 
       matrix.push(row);
     };
-
-    // The 4 possible directions to move from a given cell
-    const dirs = [
-      [0, 1],
-      [1, 0],
-      [0, -1],
-      [-1, 0]
-    ];
 
     function isCellValid(x, y) {
       return y >= 0 && x >= 0 && x < width && y < height && matrix[y][x] === 'wall';
@@ -193,9 +158,10 @@ export default function MazeGrid({ width = 15, height = 15 }) {
   };
 
   function refreshMaze() {
+    // Reset all timeoutIds & state to ensure visualization stops when maze is refreshed
     timeoutIds.forEach(clearTimeout);
     setTimeoutIds([]);
-    generateMaze(15, 15);
+    generateMaze(width, height);
   };
 
   return (

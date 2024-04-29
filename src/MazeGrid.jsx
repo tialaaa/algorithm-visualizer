@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './MazeGrid.css';
+import './App.css';
 
 export default function MazeGrid() {
   let initialMaze = [

@@ -41,6 +41,10 @@
   background-color: white;
 }
 
+.cell.visited {
+  background-color: purple;
+}
+
 .cell.start {
   background-color: green;
 }

@@ -13,6 +13,7 @@ export default function MazeGrid() {
   const [maze, setMaze] = useState(initialMaze);
   const [width, setWidth] = useState(initialMaze[0].length);
   const [height, setHeight] = useState(initialMaze.length);
+  const [timeoutIds, setTimeoutIds] = useState([]);
 
   function bfsAlgorithm(startNode) {
     let queue = [startNode];
@@ -21,6 +22,18 @@ export default function MazeGrid() {
 
     function visitCell([x, y]) {
       console.log(x, y);
+
+      // Visually change each visited cell by reassigning its value
+      setMaze((previousMaze) =>
+        previousMaze.map((row, rowIndex) =>
+          row.map((cell, cellIndex) => {
+            if (rowIndex === y && cellIndex === x) {
+              return cell === 'end' ? 'end' : 'visited'
+            };
+            return cell;
+          })
+        )
+      );
 
       if (maze[y][x] === 'end') {
         console.log('path found!');
@@ -63,8 +76,10 @@ export default function MazeGrid() {
           };
         };
       };
-
-      step();
+      
+      // Delay each step by 100 ms
+      const timeoutId = setTimeout(step, 100);
+      setTimeoutIds((previousTimeoutIds) => [...previousTimeoutIds, timeoutId]);
     };
 
     step();
@@ -78,6 +93,18 @@ export default function MazeGrid() {
     function visitCell([x, y]) {
       console.log(x, y);
 
+      // Visually change each visited cell by reassigning its value
+      setMaze((previousMaze) =>
+        previousMaze.map((row, rowIndex) =>
+          row.map((cell, cellIndex) => {
+            if (rowIndex === y && cellIndex === x) {
+              return cell === 'end' ? 'end' : 'visited'
+            };
+            return cell;
+          })
+        )
+      );
+      
       if (maze[y][x] === 'end') {
         console.log('path found!');
         return true;
@@ -120,7 +147,9 @@ export default function MazeGrid() {
         };
       };
 
-      step();
+      // Delay each step by 100 ms
+      const timeoutId = setTimeout(step, 100);
+      setTimeoutIds((previousTimeoutIds) => [...previousTimeoutIds, timeoutId]);
     };
 
     step();
@@ -181,10 +210,16 @@ export default function MazeGrid() {
     setMaze(matrix);
   };
 
+  function refreshMaze() {
+    timeoutIds.forEach(clearTimeout);
+    setTimeoutIds([]);
+    generateMaze(10, 10);
+  };
+
   return (
     <div className='maze-container'>
       <div className='button-container'>
-        <button className='button' onClick={() => generateMaze(10, 10)}>
+        <button className='button' onClick={() => refreshMaze()}>
           Refresh Maze
         </button>
         <button className='button' onClick={() => bfsAlgorithm([1, 0])}>

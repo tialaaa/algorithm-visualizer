@@ -15,8 +15,6 @@ export default function MazeGrid({ width = 15, height = 15 }) {
     let visited = new Set(`${startNode[0]}, ${startNode[1]}`);
 
     function visitCell([x, y]) {
-      console.log(x, y);
-
       // Visually change each visited cell by reassigning its value
       setMaze((previousMaze) =>
         previousMaze.map((row, rowIndex) =>
@@ -30,7 +28,6 @@ export default function MazeGrid({ width = 15, height = 15 }) {
       );
 
       if (maze[y][x] === 'end') {
-        console.log('path found!');
         return true;
       };
 
@@ -44,7 +41,6 @@ export default function MazeGrid({ width = 15, height = 15 }) {
 
       // Select the next node in the queue
       const [x, y] = queue.shift();
-      console.log('new step - BFS');
 
       const dirs = [
         [0, 1],
@@ -85,8 +81,6 @@ export default function MazeGrid({ width = 15, height = 15 }) {
     let visited = new Set(`${startNode[0]}, ${startNode[1]}`);
 
     function visitCell([x, y]) {
-      console.log(x, y);
-
       // Visually change each visited cell by reassigning its value
       setMaze((previousMaze) =>
         previousMaze.map((row, rowIndex) =>
@@ -100,7 +94,6 @@ export default function MazeGrid({ width = 15, height = 15 }) {
       );
       
       if (maze[y][x] === 'end') {
-        console.log('path found!');
         return true;
       };
 
@@ -114,7 +107,6 @@ export default function MazeGrid({ width = 15, height = 15 }) {
 
       // Select the last node in the stack
       const [x, y] = stack.pop();
-      console.log('new step - DFS');
 
       const dirs = [
         [0, 1],

@@ -1,19 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
-export default function MazeGrid() {
-  let initialMaze = [
-    ['wall', 'wall', 'wall', 'wall'],
-    ['start', 'path', 'path', 'wall'],
-    ['wall', 'wall', 'path', 'wall'],
-    ['wall', 'wall', 'path', 'end'],
-    ['wall', 'wall', 'wall', 'wall'],
-  ];
-
-  const [maze, setMaze] = useState(initialMaze);
-  const [width, setWidth] = useState(initialMaze[0].length);
-  const [height, setHeight] = useState(initialMaze.length);
+export default function MazeGrid({ width = 15, height = 15 }) {
+  const [maze, setMaze] = useState([]);
   const [timeoutIds, setTimeoutIds] = useState([]);
+
+  useEffect(() => {
+    generateMaze(width, height)
+  }, []);
 
   function bfsAlgorithm(startNode) {
     let queue = [startNode];
@@ -156,7 +150,7 @@ export default function MazeGrid() {
     return false;
   };
 
-  function generateMaze(height, width) {
+  function generateMaze(width, height) {
     let matrix = [];
 
     for (let i = 0; i < height; i++) {
@@ -169,8 +163,6 @@ export default function MazeGrid() {
 
       matrix.push(row);
     };
-
-    console.log(matrix)
 
     // The 4 possible directions to move from a given cell
     const dirs = [
@@ -205,8 +197,6 @@ export default function MazeGrid() {
 
     matrix[1][0] = 'start';
     matrix[height - 2][width - 1] = 'end';
-    setWidth(matrix[0].length);
-    setHeight(matrix.length);
     setMaze(matrix);
   };
 

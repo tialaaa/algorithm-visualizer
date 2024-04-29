@@ -77,7 +77,7 @@ export default function MazeGrid() {
         };
       };
       
-      // Delay each step by 100 ms
+      // Delay each step by 100 ms for visualization purposes
       const timeoutId = setTimeout(step, 100);
       setTimeoutIds((previousTimeoutIds) => [...previousTimeoutIds, timeoutId]);
     };
@@ -147,7 +147,7 @@ export default function MazeGrid() {
         };
       };
 
-      // Delay each step by 100 ms
+      // Delay each step by 100 ms for visualization purposes
       const timeoutId = setTimeout(step, 100);
       setTimeoutIds((previousTimeoutIds) => [...previousTimeoutIds, timeoutId]);
     };
@@ -213,7 +213,7 @@ export default function MazeGrid() {
   function refreshMaze() {
     timeoutIds.forEach(clearTimeout);
     setTimeoutIds([]);
-    generateMaze(10, 10);
+    generateMaze(15, 15);
   };
 
   return (

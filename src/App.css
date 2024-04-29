@@ -28,9 +28,9 @@
 }
 
 .cell {
-  width: 40px;
-  height: 40px;
-  border: 0.5px solid lightgrey;
+  width: 30px;
+  height: 30px;
+  border: 0.25px solid lightgrey;
 }
 
 .cell.wall {
@@ -42,7 +42,7 @@
 }
 
 .cell.visited {
-  background-color: purple;
+  background-color: lightblue;
 }
 
 .cell.start {

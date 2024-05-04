@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import refresh from './assets/refresh.mp3';
+import success from './assets/success.mp3';
+import progress from './assets/progress.mp3';
 import './App.css';
 
 export default function MazeGrid({ width = 15, height = 15 }) {
@@ -31,9 +34,11 @@ export default function MazeGrid({ width = 15, height = 15 }) {
     );
 
     if (maze[y][x] === 'end') {
+      playSuccessSound();
       return true;
     };
 
+    playProgressSound();
     return false;
   };
 
@@ -162,6 +167,19 @@ export default function MazeGrid({ width = 15, height = 15 }) {
     timeoutIds.forEach(clearTimeout);
     setTimeoutIds([]);
     generateMaze(width, height);
+    playRefreshSound();
+  };
+
+  function playRefreshSound() {
+    new Audio(refresh).play()
+  };
+
+  function playSuccessSound() {
+    new Audio(success).play()
+  };
+
+  function playProgressSound() {
+    new Audio(progress).play()
   };
 
   return (

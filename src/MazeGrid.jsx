@@ -184,6 +184,7 @@ export default function MazeGrid({ width = 15, height = 15 }) {
 
   return (
     <div className='maze-container'>
+      <h1>Pathfinding Maze</h1>
       <div className='button-container'>
         <button className='button' onClick={() => refreshMaze()}>
           Refresh Maze

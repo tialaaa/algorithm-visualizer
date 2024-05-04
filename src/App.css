@@ -1,7 +1,17 @@
 body {
+  margin: 0;
   font-family: "Radio Canada Big", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+#root {
+  height: 100%;
+}
+
+h1 {
+  margin-bottom: 40px;
 }
 
 .button {
@@ -60,4 +70,23 @@ body {
 
 .cell.end {
   background-color: red;
+}
+
+@media screen and (max-width: 500px) {
+  .cell {
+    width: 20px;
+    height: 20px;
+  }
+
+  .maze-container {
+    justify-content: start;
+  }
+}
+
+@media screen and (max-width: 412px) {
+  .button {
+    height: 75%;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
 }

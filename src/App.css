@@ -1,12 +1,21 @@
+body {
+  font-family: "Radio Canada Big", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .button {
   margin: 10px;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #0091ff;
+  background-color: #7f34c9;
   color: white;
   font-size: 16px;
-  cursor: pointer
+  cursor: pointer;
+  font-family: "Radio Canada Big", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .button-container {
@@ -30,7 +39,7 @@
 .cell {
   width: 30px;
   height: 30px;
-  border: 0.25px solid lightgrey;
+  border: 0.25px solid rgba(211, 211, 211, 0.65);
 }
 
 .cell.wall {
@@ -42,11 +51,11 @@
 }
 
 .cell.visited {
-  background-color: lightblue;
+  background-color: #d6c2ea;
 }
 
 .cell.start {
-  background-color: green;
+  background-color: rgb(57, 208, 57);
 }
 
 .cell.end {

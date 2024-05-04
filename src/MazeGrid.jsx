@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-// import { analog-button } from './assets/analog-button.mp3';
+import refresh from './assets/refresh.mp3';
 import './App.css';
 
 export default function MazeGrid({ width = 15, height = 15 }) {
@@ -163,6 +163,11 @@ export default function MazeGrid({ width = 15, height = 15 }) {
     timeoutIds.forEach(clearTimeout);
     setTimeoutIds([]);
     generateMaze(width, height);
+    playRefreshSound();
+  };
+
+  function playRefreshSound() {
+    new Audio(refresh).play()
   };
 
   return (

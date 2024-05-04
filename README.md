@@ -3,6 +3,9 @@
 ### Abstract
 Use the Pathfinding Maze to compare two common search algorithms, Breadth-First Search and Depth-First Search, through an endless set of randomly generated mazes. The maze is your graph/tree and the algorithms guide you from the designated start node to the end node.
 
+### Deployed App
+[Pathfinding Maze](https://tialaaa.github.io/algorithm-visualizer/)
+
 ### Preview
 ![PathfindingMaze-demo](https://github.com/tialaaa/algorithm-visualizer/assets/121128718/c4a40f8b-1ca0-40c8-a2b5-41cb3e15fafe)
 
